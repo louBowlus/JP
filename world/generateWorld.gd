@@ -1,10 +1,10 @@
 extends Node2D
 
 var directions = {
-	1 : Vector2.RIGHT,
-	2 : Vector2.UP,
-	3 : Vector2.DOWN,
-	4 : Vector2.LEFT
+	1 : Vector2.UP,
+	2 : Vector2.DOWN,
+	3 : Vector2.LEFT,
+	4 : Vector2.RIGHT
 }
 
 func generate(minRooms, maxRooms, difficulty, startingRoomPos, roomSize):
@@ -13,6 +13,7 @@ func generate(minRooms, maxRooms, difficulty, startingRoomPos, roomSize):
 	var roomNumber = random.randi_range(minRooms, maxRooms)
 	
 	var roomPoints = [startingRoomPos]
+	
 	
 	var startingRoom = Node2D.new()
 	startingRoom.global_position=roomPoints[0]
@@ -35,12 +36,12 @@ func generate(minRooms, maxRooms, difficulty, startingRoomPos, roomSize):
 		var sprite = Sprite.new()
 		sprite.texture = load("res://icon.png")
 		if point == Vector2.ZERO:
-			sprite.modulate = Color(0, 0, 255, 255)
+			sprite.modulate = Color(0, 0, 1,1)
 		else:
-			sprite.modulate = Color(0, 0, 0, 255)
+			sprite.modulate = Color(0, 0, 0, 1)
 		self.add_child(sprite)
 		sprite.global_position = point
-		sprite.scale /= 5
+		sprite.scale
 		if point.distance_to(Vector2.ZERO) > farthestRoom[0]:
 			farthestRoom[0] = point.distance_to(Vector2.ZERO)
 			farthestRoom[1] = point
@@ -57,5 +58,5 @@ func _process(delta):
 		for child in self.get_children():
 			if not 'Camera2D' in str(child):
 				child.queue_free()
-		generate(10, 15, 'easy', Vector2(0, 0), 30)
+		generate(10, 15, 'easy', Vector2(0, 0), 30 * 5)
 	

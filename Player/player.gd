@@ -49,7 +49,7 @@ func _physics_process(delta):
 			
 		DASH:
 			for child in fadeContainer.get_children():
-				child.modulate.a -= 0.10
+				child.modulate.a -= 0.20
 				if child.modulate.a <= 0:
 					child.queue_free()
 				print(child.modulate)
@@ -69,7 +69,4 @@ func addFade():
 	s.texture = playerSprite
 	s.global_position = global_position
 	fadeContainer.add_child(s)
-	#s.modulate.r = 0
-	#s.modulate.g = 0
-	#s.modulate.b = 0
 	
