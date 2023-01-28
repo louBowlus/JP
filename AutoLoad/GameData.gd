@@ -2,4 +2,4 @@ extends Node
 
 export var playerHealth = 10
 
-export var doorDirExt = 0
+export var playerPos = Vector2.ZERO

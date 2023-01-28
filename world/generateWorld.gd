@@ -34,21 +34,21 @@ func generate(minRooms, maxRooms, difficulty, startingRoomPos, roomSize):
 		print(point)
 		line.add_point(point)
 		var sprite = Sprite.new()
-		sprite.texture = load("res://icon.png")
+		sprite.texture = load("res://world/roomStencil.png")
 		if point == Vector2.ZERO:
 			sprite.modulate = Color(0, 0, 1,1)
 		else:
 			sprite.modulate = Color(0, 0, 0, 1)
 		self.add_child(sprite)
 		sprite.global_position = point
-		sprite.scale
+		sprite.scale *= (600/64)
 		if point.distance_to(Vector2.ZERO) > farthestRoom[0]:
 			farthestRoom[0] = point.distance_to(Vector2.ZERO)
 			farthestRoom[1] = point
 			farthestRoom[2] = sprite
 			
 	
-	farthestRoom[2].modulate = Color(255, 0, 0, 255)
+	farthestRoom[2].modulate = Color(1, 0, 0, 1)
 	
 	
 	add_child(line)
@@ -58,5 +58,5 @@ func _process(delta):
 		for child in self.get_children():
 			if not 'Camera2D' in str(child):
 				child.queue_free()
-		generate(10, 15, 'easy', Vector2(0, 0), 30 * 5)
+		generate(10, 15, 'easy', Vector2(0, 0), 600)
 	

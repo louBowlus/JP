@@ -29,6 +29,8 @@ func _physics_process(delta):
 	#get input
 	var a = Vector2.ZERO
 	
+	GameData.playerPos = global_position
+	
 	a.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	a.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	a = a.normalized()
