@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/roomStencil.png-0b1c9b0bd3c14ab6b148d55f73886dc6.stex"
+path="res://.import/torch.png-b623312ee2cc6db3324e9fca5df16fda.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/roomStencil.png"
-dest_files=[ "res://.import/roomStencil.png-0b1c9b0bd3c14ab6b148d55f73886dc6.stex" ]
+source_file="res://World/RoomObjects/torch.png"
+dest_files=[ "res://.import/torch.png-b623312ee2cc6db3324e9fca5df16fda.stex" ]
 
 [params]
 

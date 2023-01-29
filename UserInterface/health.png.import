@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/roomStencil.png-0b1c9b0bd3c14ab6b148d55f73886dc6.stex"
+path="res://.import/health.png-14d6010a6a95a2a11c2e5b35cb034030.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/roomStencil.png"
-dest_files=[ "res://.import/roomStencil.png-0b1c9b0bd3c14ab6b148d55f73886dc6.stex" ]
+source_file="res://UserInterface/health.png"
+dest_files=[ "res://.import/health.png-14d6010a6a95a2a11c2e5b35cb034030.stex" ]
 
 [params]
 
