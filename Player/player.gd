@@ -48,8 +48,6 @@ func _physics_process(delta):
 				dashPlayer.play("dash")
 				GameData.playerDashed = true
 				dashVector = a
-				state = DASH
-				
 			
 			#animate
 			if a == Vector2.ZERO:
@@ -86,6 +84,7 @@ func _physics_process(delta):
 
 
 func addFade():
+	state = DASH
 	#make a sprite a child of a Node to stay in place without following the player
 	var s = Sprite.new()
 	s.texture = playerSprite

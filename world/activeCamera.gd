@@ -5,7 +5,7 @@ onready var moveTween = $MoveTween
 signal cameraMoved
 
 var timeRemaining = 0
-var dshStr = 1
+var dshStr = 0.5
 
 #move camera based off of where players is
 func _process(delta):

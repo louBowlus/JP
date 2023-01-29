@@ -15,11 +15,11 @@ func _ready():
 		var roomVector = room / 640
 		var sqr = TextureRect.new()
 		sqr.texture = square
-		sqr.rect_position = Vector2(48, 48) + (roomVector * 16)
+		sqr.rect_position = Vector2(64, 64) + (roomVector * 16)
 		roomContainer.add_child(sqr)
 		
 		#toggle visibility of rooms too far on map
-		if sqr.rect_position.x < 0 or sqr.rect_position.x > 72 or sqr.rect_position.y < 0 or sqr.rect_position.y > 72:
+		if sqr.rect_position.x < 0 or sqr.rect_position.x > 128 or sqr.rect_position.y < 0 or sqr.rect_position.y > 128:
 			sqr.visible = false
 		else:
 			sqr.visible = true
@@ -40,7 +40,7 @@ func _on_ActiveCamera_cameraMoved(vector):
 	for child in roomContainer.get_children():
 		child.rect_position += vector * 16
 		#toggle visibility
-		if child.rect_position.x < 0 or child.rect_position.x > 2 * 48 or child.rect_position.y < 0 or child.rect_position.y > 2 * 48:
+		if child.rect_position.x < 0 or child.rect_position.x > 128 or child.rect_position.y < 0 or child.rect_position.y > 128:
 			child.visible = false
 		else:
 			child.visible = true

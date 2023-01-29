@@ -72,10 +72,11 @@ anims/RESET = SubResource( 2 )
 anims/pulse = SubResource( 1 )
 
 [node name="Map" type="ColorRect" parent="."]
+self_modulate = Color( 1, 1, 1, 0.537255 )
 margin_left = 496.0
 margin_right = 640.0
 margin_bottom = 144.0
-color = Color( 0.152941, 0.152941, 0.152941, 0.337255 )
+color = Color( 0.152941, 0.152941, 0.152941, 1 )
 
 [node name="player" type="ColorRect" parent="Map"]
 margin_left = 68.0
@@ -84,7 +85,32 @@ margin_right = 76.0
 margin_bottom = 76.0
 
 [node name="Rooms" type="Control" parent="Map"]
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 140.0
-margin_bottom = 140.0
+modulate = Color( 1, 1, 1, 0.478431 )
+margin_right = 144.0
+margin_bottom = 144.0
+
+[node name="Border" type="ColorRect" parent="Map"]
+margin_right = 144.0
+margin_bottom = 4.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Border2" type="ColorRect" parent="Map"]
+margin_top = 140.0
+margin_right = 144.0
+margin_bottom = 144.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Border3" type="ColorRect" parent="Map"]
+margin_top = 144.0
+margin_right = 144.0
+margin_bottom = 148.0
+rect_rotation = -89.9999
+color = Color( 0, 0, 0, 1 )
+
+[node name="Border4" type="ColorRect" parent="Map"]
+margin_left = 140.0
+margin_top = 144.0
+margin_right = 284.0
+margin_bottom = 148.0
+rect_rotation = -89.9999
+color = Color( 0, 0, 0, 1 )
