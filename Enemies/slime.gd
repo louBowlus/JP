@@ -1,12 +1,14 @@
 extends "res://Enemies/baseEnemyLogic.gd"
 
+export var speed = 1000
 onready var splotchCont = $SplotchContainer
 var splotch = load("res://Enemies/splotch.png")
+export var shootDistance = 200
+export var shootCooldown = 3
 
-func _ready():
-	wanderRange = 200
+var coolingRemaining = 0
 
-func _process(delta):
+func _physics_process(delta):
 	durdle(delta)
 	
 	splotchCont.global_position = Vector2(0, -7)
@@ -14,6 +16,22 @@ func _process(delta):
 		child.modulate.a -= delta
 		if child.modulate.a <= 0:
 			child.queue_free()
+	
+	match state:
+		CHASE:
+			coolingRemaining -= delta
+			
+			if global_position.distance_to(GameData.playerPos) > detectDistance:
+				state = IDLE 
+			
+			velocity = global_position.direction_to(GameData.playerPos) * speed * delta
+			velocity = move_and_slide(velocity)
+			
+			if global_position.distance_to(GameData.playerPos) <= shootDistance and coolingRemaining <= 0:
+				coolingRemaining = shootCooldown
+				#shoot
+				
+
 
 func add_splotch():
 	var s = Sprite.new()

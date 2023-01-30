@@ -3,18 +3,19 @@ extends KinematicBody2D
 enum {
 	IDLE,
 	WANDER,
-	CHARGE,
+	CHASE,
 }
 
 var time = 0
 var maxTime = 0
 var state = IDLE
 
+export var detectDistance = 100
+
 var originalPosition = Vector2.ZERO
 var wanderPosition = Vector2.ZERO
 var distance = 0
 
-var speed = 500
 var velocity = Vector2.ZERO
 
 onready var sprite = $Sprite
@@ -26,10 +27,12 @@ func _ready():
 func durdle(delta):
 	match state:
 		IDLE:
+			playerNear()
 			time -= delta
 			if time <= 0:
 				switchWanderIdle()
 		WANDER:
+			playerNear()
 			time -= delta
 			if time <= 0:
 				state = IDLE
@@ -45,15 +48,16 @@ func durdle(delta):
 				sprite.flip_h = false
 			
 			velocity = move_and_slide(velocity)
-		CHARGE:
-			pass
 
-var wanderRange = 75
+export var wanderRange = 75
+
+func playerNear():
+	if global_position.distance_to(GameData.playerPos) <= detectDistance:
+		velocity = Vector2.ZERO
+		state = CHASE
+		time = rand_range(2, 4)
 
 func switchWanderIdle():
-	
-	
-	
 	randomize()
 	print('----------------')
 	var sL = [IDLE, WANDER]
