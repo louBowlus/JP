@@ -31,7 +31,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, -16 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Open:visible")
@@ -83,7 +83,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.05, 0.1, 0.15 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0.2, 0 ), Vector2( -0.2, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, -16 ), Vector2( 0.2, -17 ), Vector2( -0.2, -15 ), Vector2( 0, -16 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Open:visible")
@@ -119,11 +119,12 @@ collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -16 )
 texture = ExtResource( 1 )
 hframes = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 8 )
+position = Vector2( 0, -8 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -131,6 +132,7 @@ anims/RESET = SubResource( 3 )
 anims/open = SubResource( 2 )
 
 [node name="DetectPlayer" type="Area2D" parent="."]
+position = Vector2( 0, -16 )
 collision_layer = 0
 collision_mask = 2
 
@@ -139,7 +141,7 @@ position = Vector2( 0, 8 )
 shape = SubResource( 4 )
 
 [node name="Open" type="Sprite" parent="."]
-position = Vector2( 0, -8 )
+position = Vector2( 0, -24 )
 texture = ExtResource( 3 )
 
 [connection signal="body_entered" from="DetectPlayer" to="." method="_on_DetectPlayer_body_entered"]

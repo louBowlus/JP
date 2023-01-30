@@ -25,6 +25,10 @@ func _ready():
 	originalPosition = global_position
 
 func durdle(delta):
+	if velocity.x < 0:
+		sprite.flip_h = true
+	elif velocity.x > 0:
+		sprite.flip_h = false
 	match state:
 		IDLE:
 			playerNear()
@@ -41,11 +45,6 @@ func durdle(delta):
 			
 			
 			velocity = wanderPosition - global_position
-			
-			if velocity.x < 0:
-				sprite.flip_h = true
-			elif velocity.x > 0:
-				sprite.flip_h = false
 			
 			velocity = move_and_slide(velocity)
 

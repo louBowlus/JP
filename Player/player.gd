@@ -93,3 +93,7 @@ func addFade():
 	fadeContainer.add_child(s)
 	s.flip_h = sprite.flip_h
 	
+
+
+func _on_HurtBox_area_entered(area):
+	GameData.playerHealth -= area.damage
