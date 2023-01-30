@@ -38,7 +38,7 @@ func _physics_process(delta):
 	#flip sprite
 	if a.x < 0:
 		sprite.flip_h = true
-	else:
+	elif a.x > 0:
 		sprite.flip_h = false
 	
 	match state:
@@ -89,7 +89,7 @@ func addFade():
 	var s = Sprite.new()
 	s.texture = playerSprite
 	s.scale *= self.scale
-	s.global_position = global_position
+	s.global_position = $DashPos.global_position
 	fadeContainer.add_child(s)
 	s.flip_h = sprite.flip_h
 	
