@@ -34,3 +34,5 @@ func _physics_process(delta):
 func _on_HurtBox_area_entered(area):
 	health -= 1
 	knockBack(global_position, area.global_position)
+	if health <= 0:
+		queue_free()

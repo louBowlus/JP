@@ -1,0 +1,19 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+//export var
+uniform vec4 flash: hint_color = vec4(1.0);
+uniform float modifier: hint_range(0.0, 1.0) = 1;
+
+//Affects all pixels
+void fragment(){
+	//get only the pixels of the sprite
+	vec4 color = texture(TEXTURE, UV);
+	//first value is what mixing, second is color (r g b) third is strenght (a)
+	color.rgb = mix(color.rgb, flash.rgb, modifier);
+	//set color
+	COLOR = color;
+	
+}"

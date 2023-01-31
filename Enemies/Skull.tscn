@@ -135,7 +135,7 @@ radius = 11.0
 scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 detectDistance = 200
-speed = 25
+speed = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -1 )
@@ -168,7 +168,7 @@ texture = ExtResource( 3 )
 [node name="HitBox" type="Area2D" parent="."]
 position = Vector2( 0, -21 )
 collision_layer = 4
-collision_mask = 0
+collision_mask = 2
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
@@ -182,4 +182,5 @@ collision_mask = 8
 shape = SubResource( 7 )
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]
 [connection signal="area_entered" from="HitBox/HurtBox" to="." method="_on_HurtBox_area_entered"]
