@@ -2,6 +2,7 @@ extends Control
 
 onready var tween = $BarTween
 onready var healthBar = $Health/Bar
+onready var staminaBar = $Stamina/Bar
 
 onready var roomContainer = $Map/Rooms
 var square = load("res://UserInterface/square.png")
@@ -28,6 +29,7 @@ func _process(delta):
 	#show health and change color of bar
 	tween.interpolate_property(healthBar, "rect_size", null, Vector2(GameData.playerHealth * 10, 4), 0.2, 1)
 	tween.interpolate_property(healthBar, "color", null, Color(1 - (GameData.playerHealth / 10), GameData.playerHealth / 5, 0, 1), 0.2, 1)
+	tween.interpolate_property(staminaBar, "rect_size", null, Vector2(GameData.playerStamina * 10, 4), 0.2, 1)
 	tween.start()
 	if GameData.playerHealth <= 3:
 		$LowHealth.play("pulse")

@@ -12,15 +12,22 @@ var state = IDLE
 
 export var detectDistance = 100
 
+export var maxHealth = 3
+var health = 0
+
+
 var originalPosition = Vector2.ZERO
 var wanderPosition = Vector2.ZERO
 var distance = 0
+
+var hitStun = 0
 
 var velocity = Vector2.ZERO
 
 onready var sprite = $Sprite
 
 func _ready():
+	health = maxHealth
 	time = rand_range(2, 6)
 	originalPosition = global_position
 
@@ -44,7 +51,7 @@ func durdle(delta):
 			
 			
 			
-			velocity = wanderPosition - global_position
+			velocity = velocity.move_toward(wanderPosition - global_position, 1000)
 			
 			velocity = move_and_slide(velocity)
 
@@ -76,3 +83,6 @@ func switchWanderIdle():
 	time = rand_range(2, 4)
 	maxTime = time
 
+func knockBack(selfPos, areaPos):
+	velocity = selfPos.direction_to(areaPos) * -1000
+	hitStun = 0.2

@@ -6,39 +6,69 @@ onready var hitBox = $HitBox
 onready var shadow = $Small
 
 var num = 0
+var initialDistance = 0
 
 func _process(delta):
 	durdle(delta)
 	
 	match state:
 		CHASE:
-			phantom.visible = true
-			
-			var vecDifference = GameData.playerPos - global_position
-			
-			phantom.global_position = GameData.playerPos + vecDifference
-			
-			if num % 2 == 0:
-				hitBox.global_position = phantom.global_position
-				shadow.global_position = phantom.global_position + Vector2(0.5, 26.5)
+			if hitStun <= 0:
+				phantom.visible = true
+				
+				var vecDifference = GameData.playerPos - global_position
+				
+				
+				
+				if num % 2 == 0:
+					hitBox.global_position = phantom.global_position
+					shadow.global_position = phantom.global_position + Vector2(0.5, 26.5)
+				else:
+					hitBox.global_position = global_position + Vector2(0, -40)
+					shadow.global_position = global_position + Vector2(0.5, -1.5)
+				
+				
+				if global_position.distance_to(GameData.playerPos) > detectDistance:
+					state = IDLE
+					num += 1
+				
+				if global_position.y != GameData.playerPos.y +21:
+					global_position.y = move_toward(global_position.y, GameData.playerPos.y + 21, speed)
+				
+				global_position.x = move_toward(global_position.x, GameData.playerPos.x, speed * delta)
+				phantom.global_position.x = move_toward(phantom.global_position.x, GameData.playerPos.x, speed * delta * 2)
+				
 			else:
-				hitBox.global_position = global_position + Vector2(0, -40)
-				shadow.global_position = global_position + Vector2(0.5, -1.5)
-			
-			
-			if global_position.distance_to(GameData.playerPos) > detectDistance:
-				state = IDLE
-				num += 1
-			
-			velocity = global_position.direction_to(GameData.playerPos) * speed * delta
-			velocity = move_and_slide(velocity)
+				hitStun -= delta
+				
+				if global_position.x > GameData.playerPos.x:
+					global_position.x += speed * delta * 10
+				else:
+					global_position.x -= speed * delta * 10
+				
+				if phantom.global_position.x > GameData.playerPos.x:
+					phantom.global_position.x += speed * delta * 2 * 10
+				else:
+					phantom.global_position.x -= speed * delta * 2 * 10
+				
+				
 		IDLE:
+			initialDistance = GameData.playerPos.x - global_position.x
+			phantom.global_position.x = GameData.playerPos.x + initialDistance
 			phantom.visible = false
 			hitBox.global_position = global_position + Vector2(0, -40)
 			shadow.global_position = global_position + Vector2(0.5, -1.5)
 		WANDER:
+			initialDistance = GameData.playerPos.x - global_position.x
+			phantom.global_position.x = GameData.playerPos.x + initialDistance
 			phantom.visible = false
 			hitBox.global_position = global_position + Vector2(0, -40)
 			shadow.global_position = global_position + Vector2(0.5, -1.5)
 
 
+
+
+func _on_HurtBox_area_entered(area):
+	hitStun = 0.3
+	health -= 1
+	num += 1

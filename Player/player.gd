@@ -10,6 +10,10 @@ var velocity = Vector2.ZERO
 #animation nodes
 onready var animationPlayer = $AnimationPlayer
 onready var dashPlayer = $DashPlayer
+onready var swordPlayer = $SwordPivot/AnimationPlayer
+onready var swordPivot = $SwordPivot
+
+signal cameraShake
 
 #state tracking
 enum {
@@ -25,6 +29,9 @@ onready var fadeContainer = $FadeContainer
 var playerSprite = preload("res://Player/base.png")
 onready var sprite = $Icon
 
+var b = Vector2.ZERO
+
+
 func _physics_process(delta):
 	#get input
 	var a = Vector2.ZERO
@@ -33,6 +40,39 @@ func _physics_process(delta):
 	
 	a.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	a.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	
+	var r = 0
+	
+	if a != Vector2.ZERO:
+		b = a
+	
+	if b.x > 0 and b.y > 0:
+		#down-right
+		r = 45 + 270
+	elif a.x > 0 and b.y < 0:
+		#up-right
+		r = 180 + 45
+	elif b.x < 0 and b.y > 0:
+		#down-left
+		r = 45
+	elif b.x < 0 and b.y < 0:
+		#up left
+		r = 180 - 45
+	elif b.x > 0 and b.y == 0:
+		#right
+		r = 270
+	elif b.x < 0 and b.y == 0:
+		#left
+		r = 90
+	elif b.x == 0 and b.y > 0:
+		#down
+		r = 0
+	elif b.x == 0 and b.y < 0:
+		#up
+		r = 180
+	
+	
+	
 	a = a.normalized()
 	
 	#flip sprite
@@ -43,8 +83,15 @@ func _physics_process(delta):
 	
 	match state:
 		MOVE:
+			if Input.is_action_just_pressed("attack") and swordPlayer.is_playing() == false:
+				swordPivot.rotation_degrees = r
+				swordPlayer.play("Swing")
+				emit_signal("cameraShake", 0.1, 0.75)
+			
+			
 			#dash
-			if Input.is_action_just_pressed("dash") and a != Vector2.ZERO:
+			if Input.is_action_just_pressed("dash") and a != Vector2.ZERO and GameData.playerStamina >= 1 and swordPlayer.is_playing() == false:
+				GameData.playerStamina -= 1
 				dashPlayer.play("dash")
 				GameData.playerDashed = true
 				dashVector = a
@@ -97,3 +144,5 @@ func addFade():
 
 func _on_HurtBox_area_entered(area):
 	GameData.playerHealth -= area.damage
+	velocity = global_position.direction_to(area.global_position) * -10000
+	$HurtBox/flash.play("flash")

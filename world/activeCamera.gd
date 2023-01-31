@@ -5,7 +5,12 @@ onready var moveTween = $MoveTween
 signal cameraMoved
 
 var timeRemaining = 0
+var currentShakeStr = 0
 var dshStr = 0.5
+
+func startShake(duration, strength):
+	timeRemaining = duration
+	currentShakeStr = strength
 
 #move camera based off of where players is
 func _process(delta):
@@ -28,13 +33,17 @@ func _process(delta):
 	
 	#shake camera
 	if GameData.playerDashed:
-		timeRemaining = 0.3
+		startShake(0.3, dshStr)
 		GameData.playerDashed = false
 	
 	#limit time
 	if timeRemaining > 0:
-		self.offset = Vector2(rand_range(-dshStr, dshStr),rand_range(-dshStr, dshStr))
+		self.offset = Vector2(rand_range(-currentShakeStr,currentShakeStr),rand_range(-currentShakeStr, currentShakeStr))
 		timeRemaining -= delta
 		if timeRemaining <= 0:
 			self.offset = Vector2.ZERO
 	
+
+
+func _on_Player_cameraShake(duration, strength):
+	startShake(duration, strength)

@@ -35,3 +35,8 @@ func onStartFin():
 	sprite.rotation = global_position.angle_to(targetPosition)
 	
 	
+
+
+
+func _on_Area2D_body_entered(body):
+	lifeTime = 0

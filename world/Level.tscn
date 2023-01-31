@@ -6,7 +6,7 @@
 [ext_resource path="res://UserInterface/Main.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World/RoomObjects/Torch.tscn" type="PackedScene" id=5]
 [ext_resource path="res://world/RoomObjects/Chest.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Enemies/Skull.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Enemies/Skull.tscn" type="PackedScene" id=8]
 
 [node name="Level" type="Node2D"]
 
@@ -16,7 +16,6 @@
 show_behind_parent = true
 
 [node name="YSort" type="YSort" parent="map"]
-show_behind_parent = true
 
 [node name="Player" parent="map/YSort" instance=ExtResource( 2 )]
 
@@ -33,10 +32,10 @@ position = Vector2( -272, 264 )
 position = Vector2( -272, -272 )
 
 [node name="Chest" parent="map/YSort" instance=ExtResource( 6 )]
-position = Vector2( -234, 293 )
+position = Vector2( -237, 280 )
 
-[node name="Skull" parent="map/YSort" instance=ExtResource( 7 )]
-position = Vector2( -228, 21 )
+[node name="Skull" parent="map/YSort" instance=ExtResource( 8 )]
+position = Vector2( -48, 184 )
 
 [node name="ActiveCamera" type="Camera2D" parent="."]
 current = true
@@ -50,6 +49,7 @@ margin_top = -320.0
 margin_right = -320.0
 margin_bottom = -320.0
 
+[connection signal="cameraShake" from="map/YSort/Player" to="ActiveCamera" method="_on_Player_cameraShake"]
 [connection signal="cameraMoved" from="ActiveCamera" to="ActiveCamera/Main" method="_on_ActiveCamera_cameraMoved"]
 
 [editable path="map"]
