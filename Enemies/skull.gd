@@ -20,7 +20,7 @@ func _process(delta):
 			if hitStun <= 0:
 				hitCollider.disabled = false
 				
-				speed = 100
+				speed = 50 + (50 * GameData.difficulties[GameData.difficulty])
 				phantom.visible = true
 				
 				var vecDifference = GameData.playerPos - global_position
@@ -88,15 +88,30 @@ func durdle2(delta):
 	hitBox.global_position = global_position + Vector2(0, -40)
 	shadow.global_position = global_position + Vector2(0.5, -1.5)
 
+
+var death = load("res://Enemies/Death.tscn")
+
+onready var hitSfx = $HitSfx
+
 func _on_HurtBox_area_entered(area):
 	speed = 200
 	hitStun = 0.25
 	health -= 1
 	num += int(rand_range(0, 3))
 	if health <= 0:
+		var d = death.instance()
+		get_parent().add_child(d)
+		d.global_position = global_position + Vector2(0, -40)
+		d.scale *= 2
+		
+		var d2 = death.instance()
+		get_parent().add_child(d2)
+		d2.global_position = phantom.global_position
+		d2.scale *= 2
+		
 		GameData.enemiesKilled += 1
 		queue_free()
-
+	hitSfx.play()
 
 
 

@@ -6,6 +6,10 @@ onready var anim = $AnimationPlayer
 
 onready var eyes = $Eyes
 
+func _ready():
+	speed = speed + (1000 * GameData.difficulties[GameData.difficulty])
+	
+
 func _physics_process(delta):
 	if hitStun <= 0:
 		durdle(delta)
@@ -31,9 +35,19 @@ func _physics_process(delta):
 		velocity = velocity.move_toward(Vector2.ZERO, 100)
 		velocity = move_and_slide(velocity)
 
+var death = load("res://Enemies/Death.tscn")
+
+onready var hitSfx = $HitSfx
+
 func _on_HurtBox_area_entered(area):
+	
 	health -= 1
 	knockBack(global_position, area.global_position)
 	if health <= 0:
+		var d = death.instance()
+		get_parent().add_child(d)
+		d.global_position = global_position + Vector2(0, -8)
+		d.scale *= 1
 		GameData.enemiesKilled += 1
 		queue_free()
+	hitSfx.play()

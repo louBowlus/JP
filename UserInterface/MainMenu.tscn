@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://UserInterface/Josefin_Sans/static/JosefinSans-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://UserInterface/mainMenu.gd" type="Script" id=2]
 [ext_resource path="res://UserInterface/arrow.png" type="Texture" id=3]
+[ext_resource path="res://Sounds/Menu Move.wav" type="AudioStream" id=4]
 
 [sub_resource type="DynamicFont" id=2]
 size = 29
@@ -164,6 +165,10 @@ margin_bottom = 88.0
 text = "Difficulty : normal"
 align = 1
 valign = 1
+
+[node name="MenuMove" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -33.476
 
 [connection signal="mouse_entered" from="Border/Start" to="." method="_on_Start_mouse_entered"]
 [connection signal="pressed" from="Border/Start" to="." method="_on_Start_pressed"]

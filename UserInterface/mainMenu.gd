@@ -12,6 +12,8 @@ var selectedButton = 0
 
 onready var arrow = $Border/Arrow
 
+onready var menuMove = $MenuMove
+
 
 func _process(delta):
 	arrow.rect_position.y = 208 + (80 * selectedButton)
@@ -20,10 +22,12 @@ func _process(delta):
 		selectedButton -= 1
 		if selectedButton < 0:
 			selectedButton = 3
+		menuMove.play()
 	if Input.is_action_just_pressed("ui_down"):
 		selectedButton += 1
 		if selectedButton > 3:
 			selectedButton = 0
+		menuMove.play()
 	
 	if Input.is_action_just_pressed("interact"):
 		if selectedButton == 0:
@@ -39,6 +43,7 @@ func _process(delta):
 	
 
 func change_size():
+	menuMove.play()
 	sizeIndex += 1
 	if sizeIndex > 2:
 		sizeIndex = 0
@@ -51,6 +56,7 @@ func change_size():
 	sizeLabel.text = "Dungeon Size : " + size[sizeIndex]
 
 func change_difficulty():
+	menuMove.play()
 	difficultyIndex += 1
 	if difficultyIndex > 2:
 		difficultyIndex = 0
@@ -73,12 +79,16 @@ func start_game():
 
 func _on_Start_mouse_entered():
 	selectedButton = 0
+	menuMove.play()
 func _on_Diffuculty_mouse_entered():
 	selectedButton = 1
+	menuMove.play()
 func _on_Size_mouse_entered():
 	selectedButton = 2
+	menuMove.play()
 func _on_Quit_mouse_entered():
 	selectedButton = 3
+	menuMove.play()
 
 
 func _on_Start_pressed():

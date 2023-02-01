@@ -4,7 +4,7 @@ export var targetPosition = Vector2.ZERO
 export var direction = "left"
 
 var startingComplete = false
-var speed = 500
+var speed = 400
 
 var lifeTime = 3
 
@@ -21,7 +21,7 @@ var vect = Vector2.ZERO
 
 func _process(delta):
 	if startingComplete:
-		veloctiy = vect * speed * delta
+		veloctiy = vect * (speed+ (100 * GameData.difficulties[GameData.difficulty])) * delta
 		sprite.position += veloctiy
 		
 		lifeTime -= delta

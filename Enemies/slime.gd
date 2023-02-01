@@ -1,6 +1,6 @@
 extends "res://Enemies/baseEnemyLogic.gd"
 
-export var speed = 3000
+export var speed = 2000
 onready var splotchCont = $SplotchContainer
 var splotch = load("res://Enemies/splotch.png")
 export var shootDistance = 200
@@ -9,6 +9,10 @@ export var shootCooldown = 3
 var shot = load("res://Enemies/SlimeShot.tscn")
 
 var coolingRemaining = 0
+
+func _ready():
+	speed = speed + (1000 * GameData.difficulties[GameData.difficulty])
+	
 
 func _physics_process(delta):
 	
@@ -59,10 +63,19 @@ func add_splotch():
 	splotchCont.add_child(s)
 	s.rotation_degrees = rand_range(0, 360)
 
+var death = load("res://Enemies/Death.tscn")
+
+onready var hitSfx = $HitSfx
 
 func _on_HurtBox_area_entered(area):
 	health -= 1
 	knockBack(global_position, area.global_position)
 	if health <= 0:
+		var d = death.instance()
+		get_parent().add_child(d)
+		d.global_position = global_position + Vector2(0, -16)
+		d.scale *= 1.5
+		
 		GameData.enemiesKilled += 1
 		queue_free()
+	hitSfx.play()

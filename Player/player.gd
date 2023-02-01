@@ -13,6 +13,10 @@ onready var dashPlayer = $DashPlayer
 onready var swordPlayer = $SwordPivot/AnimationPlayer
 onready var swordPivot = $SwordPivot
 
+onready var dashSfx = $DashSfx
+onready var hurtSfx = $HurtSfx
+onready var swordSfx = $SwordSfx
+
 signal cameraShake
 
 #state tracking
@@ -84,6 +88,7 @@ func _physics_process(delta):
 	match state:
 		MOVE:
 			if Input.is_action_just_pressed("attack") and swordPlayer.is_playing() == false:
+				swordSfx.play()
 				swordPivot.rotation_degrees = r
 				swordPlayer.play("Swing")
 				emit_signal("cameraShake", 0.1, 1)
@@ -93,6 +98,7 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("dash") and a != Vector2.ZERO and GameData.playerStamina >= 1 and swordPlayer.is_playing() == false:
 				GameData.playerStamina -= 1
 				dashPlayer.play("dash")
+				dashSfx.play()
 				GameData.playerDashed = true
 				dashVector = a
 			
@@ -145,6 +151,7 @@ signal ded
 
 func _on_HurtBox_area_entered(area):
 	emit_signal("cameraShake", 0.1, 2)
+	hurtSfx.play()
 	GameData.playerHealth -= area.damage 
 	GameData.playerHealth -= GameData.difficulties[GameData.difficulty]
 	velocity = global_position.direction_to(area.global_position) * -10000

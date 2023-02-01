@@ -6,12 +6,17 @@ onready var staminaBar = $Stamina/Bar
 
 onready var coinCount = $Coin/Count
 
+onready var menuMove = $MenuMove
+onready var endPlayer = $EndPlayer
+onready var dink = $Dink
+
 onready var roomContainer = $Map/Rooms
 var square = load("res://UserInterface/square.png")
 
 var ended = false
 
 var timeAddChar = 0.1
+
 
 var taunts = {
 	1 : "Skill issue",
@@ -70,6 +75,7 @@ func _process(delta):
 			get_parent().get_parent().get_child(0).queue_free()
 			gameOver.play("win")
 			get_tree().paused = true
+			endPlayer.play()
 			ended = true
 		
 		if GameData.playerCoins < 10:
@@ -78,17 +84,20 @@ func _process(delta):
 			coinCount.text = str(GameData.playerCoins)
 	elif GameData.playerHealth <= 0:
 		if Input.is_action_just_pressed("ui_up"):
+			menuMove.play()
 			doneSelected -= 1
 			if doneSelected < 0:
 				doneSelected = 1
 		if Input.is_action_just_pressed("ui_down"):
+			menuMove.play()
 			doneSelected += 1
 			if doneSelected > 1:
 				doneSelected = 0
 		
-		if taunt.visible_characters < len(taunt.text):
+		if taunt.visible_characters < len(taunt.text) - 5:
 			if timeAddChar <= 0:
 				timeAddChar = 0.075
+				dink.play()
 				taunt.visible_characters += 1
 			else:
 				timeAddChar -= delta
@@ -105,10 +114,12 @@ func _process(delta):
 	elif ended == true:
 		
 		if Input.is_action_just_pressed("ui_up"):
+			menuMove.play()
 			doneSelected -= 1
 			if doneSelected < 0:
 				doneSelected = 1
 		if Input.is_action_just_pressed("ui_down"):
+			menuMove.play()
 			doneSelected += 1
 			if doneSelected > 1:
 				doneSelected = 0
@@ -123,7 +134,7 @@ func _process(delta):
 			elif doneSelected == 1:
 				returnToMenu()
 		
-		if scores.visible_characters < len(scores.text):
+		if scores.visible_characters < len(scores.text)- 10:
 			if scoreTypes.visible_characters < len(scoreTypes.text):
 				if timeAddChar <= 0:
 					scoreTypes.visible_characters += 1
@@ -134,11 +145,9 @@ func _process(delta):
 				if timeAddChar <= 0:
 					scores.visible_characters += 1
 					timeAddChar = 0.15
-					
+					dink.play()
 				else:
 					timeAddChar -= delta
-		
-	
 
 
 func _on_ActiveCamera_cameraMoved(vector):
@@ -174,15 +183,21 @@ func returnToMenu():
 
 
 func _on_MM_mouse_entered():
-	doneSelected = 1
+	if GameData.playerHealth <= 0 or ended:
+		menuMove.play()
+		doneSelected = 1
 func _on_Restart_mouse_entered():
-	doneSelected = 0
+	if GameData.playerHealth <= 0 or ended:
+		menuMove.play()
+		doneSelected = 0
 
 
 func _on_Restart_pressed():
-	get_tree().paused = false
-	GameData.reset()
-	get_tree().reload_current_scene()
+	if GameData.playerHealth <= 0 or ended:
+		get_tree().paused = false
+		GameData.reset()
+		get_tree().reload_current_scene()
 
 func _on_MM_pressed():
-	returnToMenu()
+	if GameData.playerHealth <= 0 or ended:
+		returnToMenu()

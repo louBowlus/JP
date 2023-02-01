@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://UserInterface/health.png" type="Texture" id=1]
 [ext_resource path="res://UserInterface/main.gd" type="Script" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://UserInterface/Josefin_Sans/Controls2.tres" type="Theme" id=7]
 [ext_resource path="res://UserInterface/arrow.png" type="Texture" id=8]
 [ext_resource path="res://UserInterface/Main.tres" type="Theme" id=9]
+[ext_resource path="res://Sounds/Menu Move.wav" type="AudioStream" id=10]
+[ext_resource path="res://Sounds/ending.wav" type="AudioStream" id=11]
+[ext_resource path="res://Sounds/Hit.wav" type="AudioStream" id=12]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -564,6 +567,17 @@ margin_right = 256.0
 margin_bottom = 488.0
 rect_rotation = 89.9999
 texture = ExtResource( 8 )
+
+[node name="MenuMove" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -33.0
+
+[node name="EndPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="Dink" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -24.471
 
 [connection signal="mouse_entered" from="Border/Restart" to="." method="_on_Restart_mouse_entered"]
 [connection signal="pressed" from="Border/Restart" to="." method="_on_Restart_pressed"]
