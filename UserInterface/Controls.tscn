@@ -165,7 +165,7 @@ margin_top = 40.0
 margin_right = -75.0
 margin_bottom = 56.0
 theme = ExtResource( 6 )
-text = "Interact"
+text = "Interact/Select"
 
 [node name="Label3" type="Label" parent="KeyBoard"]
 modulate = Color( 0, 0, 0, 1 )

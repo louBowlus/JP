@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sprite_1.png-ed7e49deb3b2e79a1362f2177ed35565.stex"
+path="res://.import/sprite_1.png-dce7f7094249440f31aef2774833e736.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/claySet/sprite_1.png"
-dest_files=[ "res://.import/sprite_1.png-ed7e49deb3b2e79a1362f2177ed35565.stex" ]
+source_file="res://World/claySet/sprite_1.png"
+dest_files=[ "res://.import/sprite_1.png-dce7f7094249440f31aef2774833e736.stex" ]
 
 [params]
 

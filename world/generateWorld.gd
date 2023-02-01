@@ -3,6 +3,23 @@ extends Node2D
 onready var tileMap = $TileMap
 onready var floorMap = $Floor
 
+var chest = load("res://World/RoomObjects/Chest.tscn")
+
+var roomObjects = {
+	1 : load("res://World/RoomObjects/Bush.tscn"),
+	3 : load("res://World/RoomObjects/Crate.tscn"),
+	4 : load("res://World/RoomObjects/PalmTree.tscn"),
+	2 : load("res://World/RoomObjects/Torch.tscn"),
+}
+
+var enemies = {
+	3 : load("res://Enemies/Cat.tscn"),
+	2 : load("res://Enemies/Skull.tscn"),
+	1 : load("res://Enemies/Slime.tscn"),
+}
+
+var completedRooms = [Vector2.ZERO]
+
 #up down left right
 var directions = {
 	1 : Vector2.UP,
@@ -10,6 +27,10 @@ var directions = {
 	3 : Vector2.LEFT,
 	4 : Vector2.RIGHT
 }
+
+var portal = load("res://World/Portal.tscn")
+
+var farthestRoom = []
 
 func drawWalls(roomPosition, allRooms, roomSize):
 	#generate four walls for the room
@@ -100,7 +121,7 @@ func generate(minRooms, maxRooms, difficulty, startingRoomPos, roomSize):
 		self.add_child(room)
 	
 	#distance, room coords, and sprite instance
-	var farthestRoom = [0, Vector2.ZERO, null]
+	farthestRoom = [0, Vector2.ZERO, null]
 	
 	var line = Line2D.new()
 	for point in roomPoints:
@@ -115,7 +136,83 @@ func generate(minRooms, maxRooms, difficulty, startingRoomPos, roomSize):
 	#update bitmask to make it autotile correctly
 	tileMap.update_bitmask_region(Vector2(-1000, -1000), Vector2(1000, 1000))
 	GameData.roomPositions = roomPoints
+	
+	for room in roomPoints:
+		print(room)
+		if room in completedRooms:
+			pass
+		else:
+			completedRooms.append(room)
+			
+			if int(rand_range(1, 4)) > 2 and room != farthestRoom[1]:
+				var c = chest.instance()
+				c.global_position = room + Vector2(rand_range(-10, 10), rand_range(-10, 10))
+				get_child(3).add_child(c)
+			
+			#for each corner
+			for i in range(4):
+				#if 1, do two of 1 object. if 2, do 1 of two objects. if 3, do two of one and 1 of another.
+				var numberObj = int(rand_range(1, 3.9))
+				
+				var obj1 = int(rand_range(1, 4.9))
+				var obj2 = int(rand_range(1, 4.9))
+				
+				#get where to start placing from
+				var cornerStarting = getCornerDist(i, 256, room, 5)
+				
+				var s = roomObjects[obj1].instance()
+				s.global_position = cornerStarting
+				get_child(3).add_child(s)
+				
+				if numberObj > 1:
+					if numberObj > 2:
+						var p = roomObjects[obj1].instance()
+						p.global_position = getCornerDist(i, 100, room, 75)
+						get_child(3).add_child(p)
+					var dist = getCornerDist(i, 186, room, 50)
+					var k = roomObjects[obj2].instance()
+					
+					
+					if rand_range(0, 3 + (GameData.difficulties[GameData.difficulty] * 2)) > 3:
+						#add an enemy
+						var e = enemies[int(rand_range(1, 3.9))].instance()
+						e.global_position = dist + Vector2(16, 16)
+						get_child(3).add_child(e)
+						
+					
+					k.global_position = dist
+					get_child(3).add_child(k)
+				
+				
+				
+				pass
+		
+	
+	
+	var p = portal.instance()
+	p.global_position = farthestRoom[1]
+	add_child(p)
+	
+
+func getCornerDist(corner, distance, room, rng):
+	var cornerStarting = Vector2.ZERO
+	if corner == 0:
+		cornerStarting = room + Vector2(-distance + rand_range(-rng, rng), -distance + rand_range(-rng, rng))
+		#top right
+	elif corner == 1:
+		cornerStarting = room + Vector2(distance + rand_range(-rng, rng), -distance + rand_range(-rng, rng))
+		#bottom left
+	elif corner == 2:
+		cornerStarting = room + Vector2(-distance + rand_range(-rng, rng), distance + rand_range(-rng, rng))
+		#bottom right
+	elif corner == 3:
+		cornerStarting = room + Vector2(distance + rand_range(-rng, rng), distance + rand_range(-rng, rng))
+	
+	return cornerStarting
+	
+
 
 func _ready():
-	generate(30, 35, 'easy', Vector2(0, 0), 640)
-
+	generate(GameData.sizes[GameData.size][0], GameData.sizes[GameData.size][1], GameData.difficulties[GameData.difficulty], Vector2(0, 0), 640)
+	print("------------------")
+	print(GameData.size, GameData.difficulty)

@@ -27,6 +27,7 @@ var velocity = Vector2.ZERO
 onready var sprite = $Sprite
 
 func _ready():
+	maxHealth += GameData.difficulties[GameData.difficulty]
 	health = maxHealth
 	time = rand_range(2, 6)
 	originalPosition = global_position
@@ -65,19 +66,15 @@ func playerNear():
 
 func switchWanderIdle():
 	randomize()
-	print('----------------')
 	var sL = [IDLE, WANDER]
 	sL.shuffle()
 	
 	state = WANDER
 	if state == WANDER:
 		var a = Vector2(rand_range(-wanderRange, wanderRange), rand_range(-wanderRange, wanderRange))
-		print("offset from start by : ", a)
 		wanderPosition = originalPosition + a
 		distance = wanderPosition.distance_to(global_position)
 		
-		print(state, wanderPosition)
-		print("wander to : ", wanderPosition)
 		
 		
 	time = rand_range(2, 4)

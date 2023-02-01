@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tileset_claySet.png-8afc5cfc935826cecea385ebf3b5ebd8.stex"
+path="res://.import/tileset_claySet.png-c40cb76235037d75b71c2c165129056d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/claySet/tileset_claySet.png"
-dest_files=[ "res://.import/tileset_claySet.png-8afc5cfc935826cecea385ebf3b5ebd8.stex" ]
+source_file="res://World/claySet/tileset_claySet.png"
+dest_files=[ "res://.import/tileset_claySet.png-c40cb76235037d75b71c2c165129056d.stex" ]
 
 [params]
 

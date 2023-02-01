@@ -86,7 +86,7 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("attack") and swordPlayer.is_playing() == false:
 				swordPivot.rotation_degrees = r
 				swordPlayer.play("Swing")
-				emit_signal("cameraShake", 0.1, 0.75)
+				emit_signal("cameraShake", 0.1, 1)
 			
 			
 			#dash
@@ -141,8 +141,14 @@ func addFade():
 	s.flip_h = sprite.flip_h
 	
 
+signal ded
 
 func _on_HurtBox_area_entered(area):
-	GameData.playerHealth -= area.damage
+	emit_signal("cameraShake", 0.1, 2)
+	GameData.playerHealth -= area.damage 
+	GameData.playerHealth -= GameData.difficulties[GameData.difficulty]
 	velocity = global_position.direction_to(area.global_position) * -10000
 	$HurtBox/flash.play("flash")
+	GameData.playerHealth = clamp(GameData.playerHealth, 0, 10)
+	if GameData.playerHealth <= 0:
+		emit_signal("ded")

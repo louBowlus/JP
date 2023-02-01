@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/whip.png-34eaa383ec1225815d30932dd4969259.stex"
+path="res://.import/palmTree.png-d01310a0fa04be1f592583cc56a85355.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/whip.png"
-dest_files=[ "res://.import/whip.png-34eaa383ec1225815d30932dd4969259.stex" ]
+source_file="res://World/RoomObjects/palmTree.png"
+dest_files=[ "res://.import/palmTree.png-d01310a0fa04be1f592583cc56a85355.stex" ]
 
 [params]
 

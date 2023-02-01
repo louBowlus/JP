@@ -1,0 +1,175 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://UserInterface/Josefin_Sans/static/JosefinSans-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://UserInterface/mainMenu.gd" type="Script" id=2]
+[ext_resource path="res://UserInterface/arrow.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=2]
+size = 29
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=1]
+default_font = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+//export var
+uniform vec4 flash: hint_color = vec4(1.0);
+uniform float modifier: hint_range(0.0, 1.0) = 1;
+
+//Affects all pixels
+void fragment(){
+	//get only the pixels of the sprite
+	vec4 color = texture(TEXTURE, UV);
+	//first value is what mixing, second is color (r g b) third is strenght (a)
+	color.rgb = mix(color.rgb, flash.rgb, modifier);
+	//set color
+	COLOR = color;
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+shader_param/flash = Color( 1, 1, 1, 1 )
+shader_param/modifier = 1.0
+
+[node name="MainMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Border" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.215686, 0.694118, 0, 1 )
+
+[node name="Back" type="ColorRect" parent="Border"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 608.0
+margin_bottom = 608.0
+color = Color( 0.152941, 0.403922, 0, 1 )
+
+[node name="Label" type="Label" parent="Border"]
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 512.0
+margin_bottom = 168.0
+theme = SubResource( 1 )
+text = "Escape to Jurassic Paradise!"
+align = 1
+valign = 1
+
+[node name="Start" type="Button" parent="Border"]
+margin_left = 192.0
+margin_top = 200.0
+margin_right = 448.0
+margin_bottom = 264.0
+theme = SubResource( 4 )
+text = "Start"
+flat = true
+
+[node name="ColorRect" type="ColorRect" parent="Border/Start"]
+show_behind_parent = true
+margin_right = 256.0
+margin_bottom = 64.0
+mouse_filter = 1
+color = Color( 0, 0.184314, 0, 1 )
+
+[node name="Diffuculty" type="Button" parent="Border"]
+margin_left = 192.0
+margin_top = 280.0
+margin_right = 448.0
+margin_bottom = 344.0
+theme = SubResource( 4 )
+text = "Change Difficulty"
+flat = true
+
+[node name="ColorRect" type="ColorRect" parent="Border/Diffuculty"]
+show_behind_parent = true
+margin_right = 256.0
+margin_bottom = 64.0
+mouse_filter = 1
+color = Color( 0, 0.184314, 0, 1 )
+
+[node name="Size" type="Button" parent="Border"]
+margin_left = 192.0
+margin_top = 360.0
+margin_right = 448.0
+margin_bottom = 424.0
+theme = SubResource( 4 )
+text = "Change Dungeon Size"
+flat = true
+
+[node name="ColorRect" type="ColorRect" parent="Border/Size"]
+show_behind_parent = true
+margin_right = 256.0
+margin_bottom = 64.0
+mouse_filter = 1
+color = Color( 0, 0.184314, 0, 1 )
+
+[node name="Quit" type="Button" parent="Border"]
+margin_left = 192.0
+margin_top = 440.0
+margin_right = 448.0
+margin_bottom = 504.0
+theme = SubResource( 4 )
+text = "Quit"
+flat = true
+
+[node name="ColorRect" type="ColorRect" parent="Border/Quit"]
+show_behind_parent = true
+margin_right = 256.0
+margin_bottom = 64.0
+mouse_filter = 1
+color = Color( 0, 0.184314, 0, 1 )
+
+[node name="Arrow" type="TextureRect" parent="Border"]
+material = SubResource( 6 )
+margin_left = 192.0
+margin_top = 208.0
+margin_right = 240.0
+margin_bottom = 256.0
+rect_rotation = 89.9999
+texture = ExtResource( 3 )
+stretch_mode = 1
+
+[node name="SizeLabel" type="Label" parent="."]
+margin_left = 424.0
+margin_top = 40.0
+margin_right = 600.0
+margin_bottom = 64.0
+text = "Dungeon Size : small"
+align = 1
+valign = 1
+
+[node name="DifficultyLabel" type="Label" parent="."]
+margin_left = 424.0
+margin_top = 64.0
+margin_right = 600.0
+margin_bottom = 88.0
+text = "Difficulty : normal"
+align = 1
+valign = 1
+
+[connection signal="mouse_entered" from="Border/Start" to="." method="_on_Start_mouse_entered"]
+[connection signal="pressed" from="Border/Start" to="." method="_on_Start_pressed"]
+[connection signal="mouse_entered" from="Border/Diffuculty" to="." method="_on_Diffuculty_mouse_entered"]
+[connection signal="pressed" from="Border/Diffuculty" to="." method="_on_Diffuculty_pressed"]
+[connection signal="mouse_entered" from="Border/Size" to="." method="_on_Size_mouse_entered"]
+[connection signal="pressed" from="Border/Size" to="." method="_on_Size_pressed"]
+[connection signal="mouse_entered" from="Border/Quit" to="." method="_on_Quit_mouse_entered"]
+[connection signal="pressed" from="Border/Quit" to="." method="_on_Quit_pressed"]

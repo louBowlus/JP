@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sprite_0.png-7c2642ec820692c956ecbf987659bcad.stex"
+path="res://.import/coin.png-c6a13dfaa9aa56e7565b1c7ec0f647bd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/claySet/sprite_0.png"
-dest_files=[ "res://.import/sprite_0.png-7c2642ec820692c956ecbf987659bcad.stex" ]
+source_file="res://UserInterface/coin.png"
+dest_files=[ "res://.import/coin.png-c6a13dfaa9aa56e7565b1c7ec0f647bd.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
