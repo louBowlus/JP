@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+onready var sfx = $Sfx
+
 var playerNear = false
 var opened = false
 
@@ -11,6 +13,9 @@ func _ready():
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("interact") and playerNear and opened == false:
 		opened = true
+		
+		sfx.play()
+		
 		GameData.playerCoins += int(rand_range(3, 7 + (4 * GameData.difficulties[GameData.difficulty])))
 		GameData.playerStamina += int(rand_range(2, 4 + (3 * GameData.difficulties[GameData.difficulty])))
 		GameData.playerHealth += int(rand_range(1, 3 + (2 * GameData.difficulties[GameData.difficulty])))

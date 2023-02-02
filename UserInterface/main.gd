@@ -94,7 +94,7 @@ func _process(delta):
 			if doneSelected > 1:
 				doneSelected = 0
 		
-		if taunt.visible_characters < len(taunt.text) - 5:
+		if taunt.visible_characters < len(taunt.text):
 			if timeAddChar <= 0:
 				timeAddChar = 0.075
 				dink.play()
@@ -134,7 +134,7 @@ func _process(delta):
 			elif doneSelected == 1:
 				returnToMenu()
 		
-		if scores.visible_characters < len(scores.text)- 10:
+		if scores.visible_characters < len(scores.text):
 			if scoreTypes.visible_characters < len(scoreTypes.text):
 				if timeAddChar <= 0:
 					scoreTypes.visible_characters += 1

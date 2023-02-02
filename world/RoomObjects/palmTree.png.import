@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/palmTree.png-d01310a0fa04be1f592583cc56a85355.stex"
+path="res://.import/palmTree.png-d4d92bae3877b002a61851bd3de4d7e2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/RoomObjects/palmTree.png"
-dest_files=[ "res://.import/palmTree.png-d01310a0fa04be1f592583cc56a85355.stex" ]
+source_file="res://world/RoomObjects/palmTree.png"
+dest_files=[ "res://.import/palmTree.png-d4d92bae3877b002a61851bd3de4d7e2.stex" ]
 
 [params]
 
